@@ -18,7 +18,7 @@
     "maintainers": [],
     "news_url": null,
     "size": 1686159290,
-    "url": "https://github.com/coachpo/crux-pe13-ota/releases/download/r5-2026101103/Crux-PE13-R5-OTA-candidate-2026101103.zip",
+    "url": "https://cst-held-actual-clan.trycloudflare.com/Crux-PE13-R5-OTA-candidate-2026101103.zip",
     "version": "thirteen_plus",
     "website_url": "https://coachpo.github.io/crux-pe13-ota/"
   },
@@ -35,5 +35,6 @@
   "target_files": {
     "bytes": 5459404081,
     "sha256": "bbca7369f50d578134606a20ab9681bfae358511f157ab835d8cd212b992f5d5"
-  }
+  },
+  "temporary_mirror_url": "https://cst-held-actual-clan.trycloudflare.com/Crux-PE13-R5-OTA-candidate-2026101103.zip"
 }
