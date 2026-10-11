@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Xiaomi Mi 9 Pro 5G（Crux）的 PixelExperience 13 Plus 测试候选版下载、安装与 OTA 更新。">
+  <title>Crux · PixelExperience 13 Plus</title>
+  <style>
+    :root { color-scheme: light dark; font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; line-height: 1.7; }
+    body { margin: 0; background: #f4f5f7; color: #172033; }
+    main { max-width: 720px; margin: 0 auto; padding: 56px 24px 48px; }
+    h1 { margin: 8px 0 20px; font-size: clamp(1.8rem, 5vw, 2.6rem); line-height: 1.25; letter-spacing: -.035em; }
+    h2 { font-size: 1.15rem; margin: 0 0 12px; }
+    p { margin: 0 0 16px; }
+    a { color: #195ca9; text-underline-offset: .2em; }
+    a:focus-visible { outline: 3px solid #195ca9; outline-offset: 4px; }
+    .label { color: #526078; font-size: .9rem; }
+    .panel { margin: 28px 0; padding: 24px; border: 1px solid #d9dee7; border-radius: 14px; background: #fff; }
+    .download { display: inline-block; margin: 4px 0 12px; padding: 10px 18px; border-radius: 8px; background: #195ca9; color: #fff; font-weight: 650; text-decoration: none; }
+    .meta { font-size: .9rem; color: #526078; overflow-wrap: anywhere; }
+    .sources { display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 0; list-style: none; }
+    code { font-size: .9em; }
+    footer { margin-top: 32px; border-top: 1px solid #d9dee7; padding-top: 20px; font-size: .9rem; color: #526078; }
+    [hidden] { display: none !important; }
+    @media (prefers-color-scheme: dark) {
+      body { background: #111824; color: #e6ebf3; }
+      .panel { background: #192334; border-color: #344259; }
+      .label, .meta, footer { color: #b0bdd0; }
+      a { color: #8dc2ff; }
+      .download { background: #a1ccff; color: #132a47; }
+      footer { border-color: #344259; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <p class="label">Xiaomi Mi 9 Pro 5G · crux · 公共测试候选版</p>
+      <h1>PixelExperience 13 Plus</h1>
+      <p>使用原厂 ABL 和官方分区的 <code>aosp_crux_release-user</code> ROM，提供 non-A/B 签名全量安装包及 OTA 更新。</p>
+    </header>
+
+    <section class="panel" aria-labelledby="download-title">
+      <h2 id="download-title">下载与版本说明</h2>
+      <div id="recommended" hidden>
+        <p id="release-info"></p>
+        <a id="rom-download" class="download">下载推荐 ROM</a>
+        <p id="release-file" class="meta"></p>
+        <p id="release-hash" class="meta"></p>
+      </div>
+      <p id="feed-status" role="status">前往 Releases 查看测试候选版本、匹配的公共 PE Recovery 和安装指南。</p>
+      <p><a href="https://github.com/coachpo/crux-pe13-ota/releases">查看 Releases 与安装指南</a></p>
+      <p class="meta">测试范围、已知问题、所需 firmware 和可保留数据升级的起点均以对应版本说明为准。</p>
+    </section>
+
+    <section aria-labelledby="install-title">
+      <h2 id="install-title">安装与恢复</h2>
+      <p>安装前备份数据，并保持 bootloader 解锁。首次安装使用版本指南指定的公共 PE Recovery；已经处于兼容 v2 数据版本时，可手动安装全量 ZIP，或使用 ROM 内的“系统更新”下载并自动进入 Recovery 安装。</p>
+      <p>系统无法启动但仍能进入 fastboot 时，按对应版本指南使用救援包恢复。安装、升级与救援的清数据条件各不相同，操作前阅读该版本指南。</p>
+      <p>这些构建用于测试。OTA 安装链路通过不代表电话、相机、待机及其他硬件功能或日用稳定性已全部验证。</p>
+    </section>
+
+    <footer>
+      <p>源码与发布工具</p>
+      <ul class="sources">
+        <li><a href="https://github.com/coachpo/device_xiaomi_crux/tree/thirteen-plus">设备树</a></li>
+        <li><a href="https://github.com/coachpo/crux-pe13-recovery/tree/crux-pe13-functional">PE Recovery</a></li>
+        <li><a href="https://github.com/coachpo/kernel_xiaomi_crux/tree/thirteen">内核</a></li>
+        <li><a href="https://github.com/coachpo/crux-pe13-ota">OTA 服务</a></li>
+      </ul>
+      <p><a href="updates/crux/thirteen_plus.json">OTA 版本接口</a> · 确切源码版本见对应 Release。</p>
+    </footer>
+  </main>
+  <script>
+    (async () => {
+      try {
+        const response = await fetch('updates/crux/thirteen_plus.json', { cache: 'no-store' });
+        if (!response.ok) return;
+        const release = await response.json();
+        const url = new URL(release.url);
+        if (url.protocol !== 'https:' || url.hostname !== 'github.com' ||
+            !url.pathname.startsWith('/coachpo/crux-pe13-ota/releases/download/') ||
+            typeof release.filename !== 'string' || !Number.isFinite(release.datetime) ||
+            !Number.isFinite(release.size) || typeof release.version !== 'string' ||
+            !/^[a-f0-9]{64}$/i.test(release.id) || !/^[a-f0-9]{32}$/i.test(release.filehash)) return;
+        const date = new Date(release.datetime * 1000).toLocaleDateString('zh-CN', { timeZone: 'Asia/Shanghai' });
+        document.getElementById('release-info').textContent = `推荐构建 · ${date}`;
+        document.getElementById('rom-download').href = url.href;
+        document.getElementById('release-file').textContent = `${release.filename} · ${(release.size / 1048576).toFixed(1)} MiB`;
+        document.getElementById('release-hash').textContent = `SHA256：${release.id}`;
+        document.getElementById('recommended').hidden = false;
+        document.getElementById('feed-status').textContent = 'Recovery、安装指南和本版已知问题见对应 Release。';
+      } catch (_) {
+        // Keep the static Release links usable when the recommendation is unavailable.
+      }
+    })();
+  </script>
+</body>
+</html>
