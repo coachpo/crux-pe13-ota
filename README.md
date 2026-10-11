@@ -46,6 +46,29 @@
 
 仓库和 Pages 只保存公共站点、版本信息及工具。私钥、签名 `target_files`、ROM/Recovery 二进制和私人构建输入均不进入 Git；`target_files` 与匹配源码、符号作为私有发布来源留存。ROM 与 Recovery 通过 GitHub Releases 分发。
 
+## 串联发布与中断后继续
+
+`publish_release.py` 串联上述准备、上传核验和本地推荐步骤。输入须先通过独立原生签名与内容门禁；脚本不执行 ROM 编译或签名。Recovery 必须与签名 `target_files` 中 `IMAGES/recovery.img` 的实际字节相同。
+
+```sh
+python3 -B scripts/publish_release.py \
+  --signed-target-files /private/release/signed-target_files.zip \
+  --ota /private/release/ota.zip \
+  --recovery /private/release/Crux-PE-Recovery.img \
+  --release-notes /private/release/release-notes.md \
+  --guide /private/release/INSTALL.md \
+  --tag RELEASE_TAG \
+  --filename Crux-PE13-RELEASE_TAG.zip \
+  --site-dir site \
+  --evidence-dir /private/release/publication
+```
+
+默认仅准备：保留不可变发布历史，在仓库外的 `--evidence-dir/assets/` 暂存公共 ROM、Recovery、版本说明及安装指南，并输出 `publication-plan.json` 和具体 GitHub 命令；推荐接口保持原版本。OTA 的上传名由 `--filename` 指定，其余文件使用各自文件名，名称不得重复。可重复添加 `--extra-asset /path/to/public-file`，例如同源 fastboot 救援包。私钥及任何 `target_files` ZIP 均拒绝进入公共暂存资产。
+
+确认发布输入后，在同一命令末尾添加 `--publish`。此步需要已登录且有该仓库发布权限的 `gh`：标签不存在时创建新的 prerelease；已有标签时仅继续相同的公开 prerelease，核对已有文件，再上传缺失文件。已有资产名称必须全部属于本次暂存清单，Release 正文必须与计划中固定的版本说明完全一致；发现其他包、未知资产或不同正文时停止。已有文件的 URL、大小或 SHA256 不符时也停止；不会覆盖或删除文件、修改既有版本说明或把旧标签用于新包。GitHub 未提供资产 digest 时，脚本实际下载该文件核验 SHA256。上传中断可用相同输入与证据目录重跑，已核验的相同文件会复用。
+
+全部公共文件上传并核验后，脚本才推荐本地接口并验证站点。失败保留原推荐；证据目录保存 `publication-receipt.json`，完整上传后还保存实际 GitHub API 清单 `github-release.json` 和适用于推荐工具的 `uploaded-release.json`。成功状态 `published_and_recommended_locally` 表示 Release 资产已上传且本地推荐已更新；随后复核 diff、提交并推送站点，由 Pages workflow 部署，再检查公开接口与设备 OTA。脚本不提交、推送或部署站点。
+
 ## 源码
 
 - [设备树与发布打包工具](https://github.com/coachpo/device_xiaomi_crux/tree/thirteen-plus)
