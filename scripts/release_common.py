@@ -202,8 +202,19 @@ def validate_release(record):
     require(feed["version"] == build["version"] and feed["datetime"] == build["datetime"]
             and build["device"] == DEVICE and build["profile"] == "user/release-keys",
             "Release build differs from feed")
-    require(feed["url"] == release_url(record["repository"], record["tag"], feed["filename"]),
-            "Release URL must identify the immutable tag and asset")
+    expected = release_url(record["repository"], record["tag"], feed["filename"])
+    mirror = record.get("temporary_mirror_url")
+    if mirror is None:
+        require(feed["url"] == expected,
+                "Release URL must identify the immutable tag and asset")
+    else:
+        # Explicit, record-level escape hatch for a smoke run that must serve the
+        # identical signed asset from another HTTPS origin. Never set implicitly;
+        # removed again once the canonical path is proven.
+        require(feed["url"] == mirror, "Feed URL must match the recorded temporary mirror")
+        require(str(mirror).startswith("https://"), "Temporary mirror URL must be HTTPS")
+        require(Path(urlparse(mirror).path).name == feed["filename"],
+                "Temporary mirror URL must serve the recorded asset basename")
 
 
 def write_json(path, value):
