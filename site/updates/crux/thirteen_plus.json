@@ -1,14 +1,14 @@
 {
   "datetime": 1791734580,
   "donate_url": null,
-  "filehash": "b72441ca49e72d4b166edb1ba8b2e3fa",
+  "filehash": "3667dccf4f43bd65ba275370361c9114",
   "filename": "Crux-PE13-R6-OTA-candidate-2026101104.zip",
   "forum_url": "https://github.com/coachpo/crux-pe13-ota/releases",
-  "id": "bc1a91e134a02847ae4a9d1c14e325ccfe14db748d0a6a951e5e47827aa28c0e",
+  "id": "bcd38e29b6962bf96ad7369be6b105d22b1e17339cd7fae4cbdb533604fb245c",
   "maintainers": [],
   "news_url": null,
-  "size": 1685371843,
-  "url": "https://github.com/coachpo/crux-pe13-ota/releases/download/r6-2026101104-rev2/Crux-PE13-R6-OTA-candidate-2026101104.zip",
+  "size": 1685438359,
+  "url": "https://github.com/coachpo/crux-pe13-ota/releases/download/r6-2026101104-cloud/Crux-PE13-R6-OTA-candidate-2026101104.zip",
   "version": "thirteen_plus",
   "website_url": "https://coachpo.github.io/crux-pe13-ota/"
 }
