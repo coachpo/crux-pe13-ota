@@ -1,0 +1,39 @@
+{
+  "build": {
+    "datetime": 1791734580,
+    "device": "crux",
+    "fingerprint": "Xiaomi/crux/crux:13/TQ3A.230901.001.B1/2026101104:user/release-keys",
+    "incremental": "2026101104",
+    "ota_timestamp": 1791734380,
+    "profile": "user/release-keys",
+    "version": "thirteen_plus"
+  },
+  "feed": {
+    "datetime": 1791734580,
+    "donate_url": null,
+    "filehash": "dcb729463e5d23426b93db831932f328",
+    "filename": "Crux-PE13-R6-OTA-candidate-2026101104.zip",
+    "forum_url": null,
+    "id": "e9de85769f196044d95e87a1a7b0a85199ddfbb7aa3e3579efa6b878f5fa71ed",
+    "maintainers": [],
+    "news_url": null,
+    "size": 1685382360,
+    "url": "https://github.com/coachpo/crux-pe13-ota/releases/download/r6-2026101104-hosted/Crux-PE13-R6-OTA-candidate-2026101104.zip",
+    "version": "thirteen_plus",
+    "website_url": null
+  },
+  "ota": {
+    "bytes": 1685382360,
+    "md5": "dcb729463e5d23426b93db831932f328",
+    "sha256": "e9de85769f196044d95e87a1a7b0a85199ddfbb7aa3e3579efa6b878f5fa71ed"
+  },
+  "release_id": "e9de85769f196044d95e87a1a7b0a85199ddfbb7aa3e3579efa6b878f5fa71ed",
+  "repository": "coachpo/crux-pe13-ota",
+  "schema_version": 1,
+  "signature_acceptance": "Independent native signature gates required before upload",
+  "tag": "r6-2026101104-hosted",
+  "target_files": {
+    "bytes": 5458588618,
+    "sha256": "647519d50228ce1c83998edea5c007947cfd8d0366c00f39f8b4ccb8f9f9b664"
+  }
+}
